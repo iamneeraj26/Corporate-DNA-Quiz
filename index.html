@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Corporate DNA Test</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .quiz-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 0.5rem 0;
+      padding: 1rem;
+      background: #e0e0e0;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background: #d0d0ff;
+    }
+    .result {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-box">
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        q: "How do you usually start your workday?",
+        o: [
+          "Catching up on 173 Team notifications",
+          "Triple espresso and calendar denial",
+          "Updating the master spreadsheet",
+          "Already in a meeting... since 7:45 AM"
+        ]
+      },
+      {
+        q: "Someone says 'Let’s take this offline.' You think:",
+        o: [
+          "Good, I can post about it on Teams.",
+          "That’s code for ‘never speak of this again.’",
+          "I’ll schedule a 45-min follow-up ASAP.",
+          "Offline? Like... in person?!"
+        ]
+      },
+      {
+        q: "What’s your spirit tool?",
+        o: [
+          "Docs with anonymous otters",
+          "The Team mute button",
+          "PivotTable",
+          "Post-it wall of chaos"
+        ]
+      }
+      // Add more questions here if needed
+    ];
+
+    const results = [
+      "You're the 🧠 Spreadsheet Sorcerer!",
+      "You're the 🔕 Quiet Ghost!",
+      "You're the 📅 Meeting Maven!",
+      "You're the 🍩 Snack Strategist!"
+    ];
+
+    let current = 0;
+    let score = [0, 0, 0, 0];
+
+    function showQuestion() {
+      document.getElementById("result").innerText = "";
+      const q = questions[current];
+      document.getElementById("question").innerText = q.q;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      q.o.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          score[idx]++;
+          current++;
+          if (current < questions.length) {
+            showQuestion();
+          } else {
+            const max = Math.max(...score);
+            const result = results[score.indexOf(max)];
+            document.getElementById("question").innerText = "Your Corporate DNA:";
+            document.getElementById("options").innerHTML = "";
+            document.getElementById("result").innerText = result;
+          }
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
