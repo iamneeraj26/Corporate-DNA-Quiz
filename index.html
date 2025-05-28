@@ -5,127 +5,159 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Corporate DNA Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: sans-serif;
-      background: #f4f4f4;
       margin: 0;
-      padding: 2rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      flex-direction: column;
+      font-family: 'Rubik', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #ffffff);
+      color: #333;
     }
-    .quiz-box {
+    .container {
+      max-width: 700px;
+      margin: 3em auto;
       background: #fff;
-      padding: 2rem;
-      border-radius: 1rem;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-radius: 16px;
+      padding: 2em;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #00796b;
     }
     .question {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
+      margin: 2em 0;
     }
-    .options button {
+    .question h2 {
+      font-size: 1.2em;
+      margin-bottom: 0.5em;
+      color: #004d40;
+    }
+    .options label {
       display: block;
-      width: 100%;
-      margin: 0.5rem 0;
-      padding: 1rem;
-      background: #e0e0e0;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 1rem;
+      margin: 0.4em 0;
+      padding: 0.5em;
+      border: 2px solid transparent;
+      border-radius: 8px;
       cursor: pointer;
+      transition: 0.3s;
     }
-    .options button:hover {
-      background: #d0d0ff;
+    .options input[type="radio"] {
+      display: none;
     }
-    .result {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-top: 2rem;
+    .options input[type="radio"]:checked + span {
+      border-color: #00796b;
+      background: #e0f2f1;
+    }
+    .options span {
+      display: block;
+      padding: 0.4em;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    button {
+      background: #00796b;
+      color: white;
+      border: none;
+      padding: 1em 2em;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+      display: block;
+      margin: 2em auto;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #004d40;
+    }
+    #result {
+      text-align: center;
+      font-size: 1.2em;
+      padding-top: 1em;
     }
   </style>
 </head>
 <body>
-  <div class="quiz-box">
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
-    <div class="result" id="result"></div>
+  <div class="container">
+    <h1>Corporate DNA Test</h1>
+    <form id="quizForm">
+      <!-- Questions will be injected here -->
+    </form>
+    <button onclick="showResult()">Submit</button>
+    <div id="result"></div>
   </div>
 
   <script>
     const questions = [
-      {
-        q: "How do you usually start your workday?",
-        o: [
-          "Catching up on 173 Team notifications",
-          "Triple espresso and calendar denial",
-          "Updating the master spreadsheet",
-          "Already in a meeting... since 7:45 AM"
-        ]
-      },
-      {
-        q: "Someone says 'Let’s take this offline.' You think:",
-        o: [
-          "Good, I can post about it on Teams.",
-          "That’s code for ‘never speak of this again.’",
-          "I’ll schedule a 45-min follow-up ASAP.",
-          "Offline? Like... in person?!"
-        ]
-      },
-      {
-        q: "What’s your spirit tool?",
-        o: [
-          "Docs with anonymous otters",
-          "The Team mute button",
-          "PivotTable",
-          "Post-it wall of chaos"
-        ]
-      }
-      // Add more questions here if needed
+      "How do you usually start your workday?",
+      "Someone says 'Let’s take this offline.' You think:",
+      "What’s your spirit tool?",
+      "Pick a snack from the office kitchen:",
+      "How do you react to 'We need to pivot'?",
+      "You accidentally joined a call 10 minutes early. You:",
+      "What’s your preferred meeting style?",
+      "Choose a Team status:",
+      "It’s 4:59 PM on Friday. Someone pings you 'Quick Q?' You:",
+      "What’s your file naming system?",
+      "Choose your Teams behavior:",
+      "You describe your job as:",
+      "A fire breaks out (figuratively) in a project. You:",
+      "What’s your reaction to an all-hands invite?",
+      "You’re best known on the team for:"
     ];
 
-    const results = [
-      "You're the 🧠 Spreadsheet Sorcerer!",
-      "You're the 🔕 Quiet Ghost!",
-      "You're the 📅 Meeting Maven!",
-      "You're the 🍩 Snack Strategist!"
+    const answers = [
+      ["Catching up on 173 Team notifications", "Triple espresso and calendar denial", "Updating the master spreadsheet", "Already in a meeting... since 7:45 AM"],
+      ["Good, I can post about it on Teams.", "That’s code for ‘never speak of this again.’", "I’ll schedule a 45-min follow-up ASAP.", "Offline? Like... in person?!"],
+      ["Docs with anonymous otters", "The Team mute button", "PivotTable", "Post-it wall of chaos"],
+      ["The last donut you didn’t label", "Half a protein bar from Q3", "Lukewarm coffee", "Someone else’s leftover pad thai (oops)"],
+      ["Break into a cold sweat", "Start a new tab in your Gantt chart", "Reply with 'New year, new me!'", "Laugh maniacally, then update your résumé"],
+      ["Panic and leave immediately", "Turn off camera and wait in silence", "Start presenting like it’s your TED Talk", "Use the time to complete RF :p"],
+      ["15-minute standups that turn into life updates", "Calendar Tetris with back-to-backs", "No meetings, just team GIFs", "Meetings about planning other meetings"],
+      ["'Brb: Deep in snack spiral'", "'Mentally out of office'", "'Deadline mode: Do not ping'", "'Invisible (but watching)'"],
+      ["Turn off notifications until Monday", "Respond with 'Just sent you a calendar link!'", "Reply instantly with a fully researched answer", "Type 'lol' and ghost"],
+      ["'Final_Final_REALfinal_v6.docx'", "Date + version number + prayer", "Meticulously tagged folders", "Search bar = life"],
+      ["Camera always off, mic always on", "Background: beach + vibes", "Uses '🙃' emoji to express existential dread", "Accidentally screen shares personal tab"],
+      ["Herding cats with Wi-Fi", "Managing chaos using spreadsheets", "Translating vague ideas into action", "Constantly muting and unmuting"],
+      ["Make memes about it", "Add more conditional formatting", "Lead a triage war room", "Silently observe from the shadows"],
+      ["Popcorn ready 🍿", "Do I need to talk?", "Could’ve been an email.", "Yay! More slides! (sarcastically)"],
+      ["Dropping hilarious reactions in chat", "Meeting notes so detailed it’s scary", "Saying 'Let’s circle back' 400x", "Wearing the same hoodie in every call"]
     ];
 
-    let current = 0;
-    let score = [0, 0, 0, 0];
+    const resultTypes = ["The Spreadsheet Sorcerer", "The Meeting Phantom", "The Chaos Jester", "The Overachieving Otter"];
 
-    function showQuestion() {
-      document.getElementById("result").innerText = "";
-      const q = questions[current];
-      document.getElementById("question").innerText = q.q;
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
-      q.o.forEach((opt, idx) => {
-        const btn = document.createElement("button");
-        btn.innerText = opt;
-        btn.onclick = () => {
-          score[idx]++;
-          current++;
-          if (current < questions.length) {
-            showQuestion();
-          } else {
-            const max = Math.max(...score);
-            const result = results[score.indexOf(max)];
-            document.getElementById("question").innerText = "Your Corporate DNA:";
-            document.getElementById("options").innerHTML = "";
-            document.getElementById("result").innerText = result;
-          }
-        };
-        optionsDiv.appendChild(btn);
+    function loadQuiz() {
+      const form = document.getElementById('quizForm');
+      questions.forEach((q, i) => {
+        let html = `<div class="question"><h2>${i + 1}. ${q}</h2><div class="options">`;
+        answers[i].forEach((opt, j) => {
+          html += `
+            <label>
+              <input type="radio" name="q${i}" value="${j}">
+              <span>${String.fromCharCode(65 + j)}) ${opt}</span>
+            </label>`;
+        });
+        html += `</div></div>`;
+        form.innerHTML += html;
       });
     }
 
-    showQuestion();
+    function showResult() {
+      const form = document.forms.quizForm;
+      let score = [0, 0, 0, 0]; // Map each answer A-D to a persona
+      for (let i = 0; i < questions.length; i++) {
+        const val = form[`q${i}`].value;
+        if (val !== undefined) {
+          score[val]++;
+        }
+      }
+      const max = Math.max(...score);
+      const index = score.indexOf(max);
+      const resultBox = document.getElementById('result');
+      resultBox.innerHTML = `<h2>You are: ${resultTypes[index]} 🎉</h2>`;
+    }
+
+    loadQuiz();
   </script>
 </body>
 </html>
