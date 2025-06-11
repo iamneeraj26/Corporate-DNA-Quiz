@@ -1,0 +1,24 @@
+body {
+  font-family: Arial, sans-serif;
+}
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+}
+.answer-btn {
+  transition: background-color 0.3s;
+}
+.answer-btn:hover {
+  transform: scale(1.02);
+}
+.next-btn {
+  display: none;
+}
+.next-btn.active {
+  display: inline-block;
+}
+@media (max-width: 640px) {
+  .max-w-md {
+    max-width: 90%;
+  }
+}
