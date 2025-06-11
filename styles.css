@@ -1,0 +1,47 @@
+body {
+  font-family: Arial, sans-serif;
+}
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+}
+#quiz-container {
+  background-image: url('images/paper-texture.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.95;
+  background-color: #f5f5f5; /* Fallback if paper-texture.png is missing */
+}
+.answer-btn {
+  transition: background-color 0.3s;
+  display: block;
+  text-align: left;
+  min-height: 60px;
+  font-size: 1rem;
+  color: #1f2937; /* Dark gray for contrast */
+}
+.answer-btn:hover {
+  transform: scale(1.02);
+}
+.answer-btn.selected {
+  background-color: #bfdbfe;
+}
+#next-btn:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+.transition-opacity {
+  transition: opacity 0.3s ease-in-out;
+}
+#welcome-screen, #question-screen, #result-screen {
+  transition: opacity 0.3s ease-in-out;
+}
+.hidden {
+  display: none;
+  opacity: 0;
+}
+@media (max-width: 640px) {
+  .max-w-md {
+    max-width: 90%;
+  }
+}
